@@ -1,0 +1,72 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+model ClaimPrediction {
+  billingAgent String?
+  claimAmount  Float?
+  claimStatus  EnumClaimPredictionClaimStatus?
+  createdAt    DateTime                        @default(now())
+  id           String                          @id @default(cuid())
+  medicalCode  String?
+  updatedAt    DateTime                        @updatedAt
+}
+
+model MedicalRecord {
+  cost      Float?
+  cover     String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Patient {
+  createdAt DateTime @default(now())
+  email     String?
+  id        String   @id @default(cuid())
+  name      String?
+  updatedAt DateTime @updatedAt
+}
+
+model Doctor {
+  createdAt DateTime @default(now())
+  email     String?
+  id        String   @id @default(cuid())
+  name      String?
+  updatedAt DateTime @updatedAt
+}
+
+model DiseaseAnalysis {
+  createdAt       DateTime @default(now())
+  id              String   @id @default(cuid())
+  prediction      String?
+  recommendations String?
+  updatedAt       DateTime @updatedAt
+}
+
+model BillingAgent {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+enum EnumClaimPredictionClaimStatus {
+  Option1
+}
